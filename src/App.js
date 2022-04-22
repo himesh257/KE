@@ -13,10 +13,11 @@ const useStyles = makeStyles({
   }
 });
 
-const numCards = 10
+const numCards = 1
 
 export default function App() {
   const classes = useStyles();
+
   return (
     <><NavBar></NavBar>
     <Grid container spacing={4} className={classes.gridContainer} justify="center">

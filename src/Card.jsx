@@ -5,6 +5,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import * as AWS from 'aws-sdk'
 
 const useStyles = makeStyles({
   root: {
@@ -27,6 +28,8 @@ const useStyles = makeStyles({
 });
 
 export default function OutlinedCard() {
+
+  let docClient = new AWS.DynamoDB.DocumentClient();
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -39,8 +42,25 @@ export default function OutlinedCard() {
         <Typography variant="body2" component="p"> well meaning and kindly. <br /> {'"a benevolent smile"'} </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={route}>Learn More</Button>
       </CardActions>
     </Card>
   );
+
+  function route() {
+    console.log("clicked")
+
+    let params = {
+      TableName: "articles"
+    };
+
+    docClient.scan(params, function(err, data) {
+      if (err) {
+          console.log(err);
+      } else {
+          console.log(data)
+      }
+    });
+  }
+
 }
